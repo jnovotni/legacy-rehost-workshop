@@ -1,0 +1,79 @@
+# OpenShift Pipelines
+
+### Notes
+- The pipeline artifacts for openshift are compatible with OpenShift 4.6 and 4.7.
+
+- The generated `src/config/server_config.py` script file may contain password variable but its value has been stripped off from
+the original source environment.  You need to provide it manually. For example,
+
+  ```
+  # The following variables are used to replace sensitive data in the configuration for the application.
+  # The values for these variables were not collected because the includeSensitiveData option was not specified.
+  # ============================================================
+  myhost_a1CellManager01_db2_password_1=''
+  # ============================================================
+  ```
+- Verify the git url value in `pipeline/openshift/resources.yaml` which should be set correctly if the migration bundle
+  is send to git directly from the Transformation Advisor user interface.
+
+## Deploy to Red Hat OpenShift Container Platform using OpenShift Pipelines
+
+### Prerequisites
+1. Install the OpenShift Pipeline Operator if its not already installed. See OpenShift [documentation](https://docs.openshift.com/container-platform/4.6/pipelines/installing-pipelines.html) for more details.
+
+2. An available `PersistentVolume` with at least 100Mi capacity and `accessMode` of `ReadWriteOnce`. The pipeline will create and use a `PersistentVolumeClaim` that will bind to this available `PersistentVolume`.
+   The storage should have appropriate permissions to allow writing from the pipeline pods.
+
+3. If you wish to control and monitor your pipeline from the command line, install the OpenShift pipeline CLI by following the instructions [here](https://github.com/tektoncd/cli)
+
+### Steps
+1. Login to OCP cluster and create a project
+   ```
+   oc login --token={your_openshift_cluster_access_token} --server=your_openshift_cluster_url:6443
+   oc project myproject
+   ```
+
+2. Clone this git repository with the migration artifacts to your local machine and cd to the repository root.
+
+3. Create a OpenShift pipeline and pipeline resources for building and deploying this application
+
+   - Update the image url value in `03-pipeline-run.yaml` if you are deploying the application to a
+   different project. i.e. change `myproject` in the following line to match your namespace.
+   ```
+     params:
+     - name: image-url
+       value: image-registry.openshift-image-registry.svc:5000/myproject/application:latest
+   ```
+
+   - The branch for the git repo is set to `master` by default, if you wish to update that please do so in the `03-pipeline-run.yaml` file.
+
+   - Set context root in route resource in the file `pipeline/k8s/route.yaml`. The path is set to / by default.
+
+   - Create the resources and start a pipeline run:
+   ```
+   oc create -f pipeline/openshift
+   ```
+   - Check that the `pvc` was created and bound successfully:
+   ```
+   oc get pvc
+   ```
+   If that command does not show a bound `pvc` called `shared-task-storage`, check your persistence configuration.
+
+
+4. After the pipeline run has successfully finished, find the application route from Openshift dashboard or the following command.
+
+   ```
+   oc get routes
+   ```
+
+=== Sections
+
+<<Introduction.adoc, Back to the Introduction>>
+
+<<JBossRehost.adoc, Rehost a JBoss Application>>
+
+<<WebSphereRehost.adoc, Rehosting a WebSphere Application>>
+
+<<WebLogicRehost.adoc, Rehost a WebLogic Application>>
+
+<<OpenShiftPipelines.adoc, Deploy a WebSphere Application Using OCP Pipelines>>
