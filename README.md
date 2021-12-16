@@ -1,12 +1,12 @@
 # legacy-rehost-workshop
 This workshop will walk you through rehosting existing JBoss, WebSphere, and WebLogic applications onto OpenShift without modifying any source code.
 
-<<Introduction.adoc#, Introduction>>
+[Introduction](Introduction.adoc)
 
-<<JBossRehost.adoc#, Rehost a JBoss Application>>
+[Rehosting a JBoss Application](JBossRehost.adoc)
 
-<<WebSphereRehost.adoc#, Rehosting a WebSphere Application>>
+[Rehosting a WebSphere Application](WebSphereRehost.adoc)
 
-<<WebLogicRehost.adoc#, Rehost a WebLogic Application>>
+[Rehosting a WebLogic Application](WebLogicRehost.adoc)
 
-<<OpenShiftPipelines.adoc#, Deploy a WebSphere Application Using OCP Pipelines>>
+[Deploying a WebSphere Application Using OCP Pipelines](OpenShiftPipelines.adoc)
