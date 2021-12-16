@@ -24,7 +24,7 @@ image::./Images/PipelinesOperatorInstall.png[image]
 
 Now that we have install the operator, we need to create our pipeline.
 
-The first thing we need to do is create a project for our pipeline. 
+The first thing we need to do is create a project for our pipeline.
 
 Click on `Home` in the side menu and select `Projects`. Click on `Create Project` in the upper right corner. Name the project `websphere-pipeline`.
 
@@ -193,7 +193,7 @@ spec:
 
 === Run the Pipeline
 
-With all of our resources in place, we are ready to run our pipeline! 
+With all of our resources in place, we are ready to run our pipeline!
 
 Importing `03-pipeline-run.yaml` will cause the pipeline to run and build our application. The `image-url` parameter needs to be updated with the correct project and application name. This has already been in the following yaml.
 
@@ -232,7 +232,7 @@ image::./Images/PipelinesRunningLogs.png[image]
 
 After a few minutes the pipeline run will complete and our application will be deployed.
 
-image::./ImagesPipelinesRunCompleted.png[image]
+image::./Images/PipelinesRunCompleted.png[image]
 
 === Access and Test the Application
 
@@ -269,4 +269,3 @@ In this section we were able to create an OpenShift Pipeline to deploy our appli
 <<WebLogicRehost.adoc, Rehost a WebLogic Application>>
 
 <<OpenShiftPipelines.adoc, Deploy a WebSphere Application Using OCP Pipelines>>
-
