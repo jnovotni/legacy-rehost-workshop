@@ -19,10 +19,10 @@ You will be given access to an OpenShift cluster and a bastion host. You will cr
 
 Feel free to complete one or all of the sections of the workshop.
 
-<<JBossRehost.adoc#, Rehost a JBoss Application>>
+<<JBossRehost.adoc#, Rehosting a JBoss Application>>
 
 <<WebSphereRehost.adoc#, Rehosting a WebSphere Application>>
 
-<<WebLogicRehost.adoc#, Rehost a WebLogic Application>>
+<<WebLogicRehost.adoc#, Rehosting a WebLogic Application>>
 
-<<OpenShiftPipelines.adoc#, Deploy a WebSphere Application Using OCP Pipelines>>
+<<OpenShiftPipelines.adoc#, Deploying a WebSphere Application Using OCP Pipelines>>
