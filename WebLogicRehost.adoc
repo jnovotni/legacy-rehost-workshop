@@ -344,10 +344,10 @@ In this section we were able to deploy the WebLogic Operator as well as a WebLog
 
 == Sections
 
-<<Introduction.adoc, Back to the Introduction>>
+<<Introduction.adoc#, Back to the Introduction>>
 
-<<JBossRehost.adoc, Rehost a JBoss Application>>
+<<JBossRehost.adoc#, Rehost a JBoss Application>>
 
-<<WebSphereRehost.adoc, Rehosting a WebSphere Application>>
+<<WebSphereRehost.adoc#, Rehosting a WebSphere Application>>
 
-<<OpenShiftPipelines.adoc, Deploy a WebSphere Application Using OCP Pipelines>>
+<<OpenShiftPipelines.adoc#, Deploy a WebSphere Application Using OCP Pipelines>>

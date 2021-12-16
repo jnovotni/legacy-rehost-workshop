@@ -66,10 +66,10 @@ As you saw, when we say "no code changes" we mean **no code changes**. We were a
 
 == Sections
 
-<<Introduction.adoc, Back to the Introduction>>
+<<Introduction.adoc#, Back to the Introduction>>
 
-<<JBossRehost.adoc, Rehost a JBoss Application>>
+<<JBossRehost.adoc#, Rehost a JBoss Application>>
 
-<<WebLogicRehost.adoc, Rehost a WebLogic Application>>
+<<WebLogicRehost.adoc#, Rehost a WebLogic Application>>
 
-<<OpenShiftPipelines.adoc, Deploy a WebSphere Application Using OCP Pipelines>>
+<<OpenShiftPipelines.adoc#, Deploy a WebSphere Application Using OCP Pipelines>>

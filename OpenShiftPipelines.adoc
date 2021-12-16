@@ -260,12 +260,12 @@ In this section we were able to create an OpenShift Pipeline to deploy our appli
 
 == Sections
 
-<<Introduction.adoc, Back to the Introduction>>
+<<Introduction.adoc#, Back to the Introduction>>
 
-<<JBossRehost.adoc, Rehost a JBoss Application>>
+<<JBossRehost.adoc#, Rehost a JBoss Application>>
 
-<<WebSphereRehost.adoc, Rehosting a WebSphere Application>>
+<<WebSphereRehost.adoc#, Rehosting a WebSphere Application>>
 
-<<WebLogicRehost.adoc, Rehost a WebLogic Application>>
+<<WebLogicRehost.adoc#, Rehost a WebLogic Application>>
 
-<<OpenShiftPipelines.adoc, Deploy a WebSphere Application Using OCP Pipelines>>
+<<OpenShiftPipelines.adoc#, Deploy a WebSphere Application Using OCP Pipelines>>
