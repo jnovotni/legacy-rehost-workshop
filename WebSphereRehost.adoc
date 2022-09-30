@@ -2,7 +2,7 @@
 
 == Introduction
 
-Find IBM WebSphere sales pitch
+IBM WebSphere Application Server accelerates application delivery with a highly reliable Java Enterprise Edition-based runtime environment. It supports microservices and standards-based programming models designed to help you modernize at your own pace, gain visibility across workloads, analyze enterprise applications and advance your journey to Kubernetes.
 
 == Steps
 
@@ -16,25 +16,27 @@ image::./Images/WebSphere-CreateProject.png[image]
 
 === Deploy Application
 
-We are going to switch to Developer perspective for the remainder of this section.
+We are going to switch to Developer perspective for the remainder of this section. If you are not already in the Developer perspective, switch over now.
 
 image::./Images/SelectDeveloperView.png[image]
 
-Click `+Add` in the upper left corner and select `From DockerFile`.
+Click `+Add` in the upper left corner and select `Import from Git`.
 
-image::./Images/AddDockerFile.png[image]
+image::./Images/WebSphereImportFromGit.png[image]
 
-Enter the GitHub Repo URL `https://github.com/gskumar1010/TA-klp-demo`. The fields will be auto-populated.
+Enter the GitHub Repo URL `https://github.com/jnovotni/TA-klp-demo`. The fields will be auto-populated.
 
-We need to update the port so that the deployment uses port 9080.
+Scroll down to `Advanced options`.
 
-Scroll to the bottom where you will see a message `Click on the names to access advanced options for Routing, Health checks, Build configuration...`
+Enter `9080` for the `Target port` and make sure that `Create a route` is checked.
 
-image::./Images/AdvancedOptions.png[image]
+image::./Images/WebSphereTargetPort.png[image]
 
-Click on `Routing`. This will give us more options. Enter `9080` for `Target port` and click on the drop down option `Create "9080"`.
+Click on `Show advanced Routing options`. This will give us more options.
 
-image::./Images/RoutingOptions.png[image]
+Enter `/hitcount` for `Path` and uncheck the `Secure Route` option under `Security`.
+
+image::./Images/WebSphereAdvancedOptions.png[image]
 
 Click `Create`.
 
@@ -44,13 +46,9 @@ image::./Images/WebSphereInProgress.png[image]
 
 === Access and Test the Application
 
-Once the deployment is complete, we can access the application by using the URL under the Routes section of the Deployment information.
+Once the deployment is complete, we can access the application by clicking the URL under the Routes section of the Deployment information.
 
 image::./Images/WebSphereRoutes.png[image]
-
-Take the URL and add `/hitcount` to the end of it so that we hit our Hit Count application's end point.
-
-For example `http://ta-klp-demo-rehost-websphere.apps.ocp.shadowman.dev/hitcount`
 
 Select `Enterprise Java Bean (CMP)` as the method of execution, `Global Namespace` as the lookup method, and `Commit` as the transaction type. Click `Increment`.
 
