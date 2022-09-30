@@ -156,17 +156,55 @@ deploy:
     initialDelaySeconds: 10
 ```
 
-Go watch the application build.
+We can watch the progress of the build. Click on the `Builds` tab on the side menu to see the BuildConfigs.
 
-It's building the application and then it's putting the application on a base image.
+image::./Images/JBossBuildConfigs.png[image]
+
+The eap74-build-artifacts build needs to finish running before the eap74 build will complete.
+
+Click on `eap74-build-artifacts` and then select the `Builds` tab to see the build's status.
+
+image::./Images/JBossEAP74BuildArtifactsBuildsTab.png[image]
+
+Once that build is complete, go back to the BuildConfigs and click on `eap74`. Select the `Builds` tab to see the build's status.
+
+image::./Images/JBossEAP74BuildsTab.png[image]
+
+//add an image to show what the build event tab looks like
 
 When the builds finish, we are ready to deploy our application.
 
 === Deploy the Application
 
-Let's deploy the application using the image we just built along with the options we set in our ConfigMap.
+Let's deploy the application using the image we just built.
 
-We are going to use the JBoss EAP Operator to help us deploy the application. Click on `+Add` in the side menu and choose `Operator Backed`.
+First, we need to set our MySQL options in a ConfigMap.
+
+//Make sure you are in the rehost-jboss project. Run the following command to create the ConfigMap.
+//[source,bash,role=execute]
+//----
+//cat <<EOF | oc apply -f -
+Click on the import button in the upper right (the `+` sign) and import the following yaml to create the ConfigMap.
+```
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: eap-config
+data:
+  DATASOURCES: "TEST"
+  TEST_DATABASE: "eap"
+  TEST_NAME: "mysql"
+  TEST_DRIVER: "mysql"
+  TEST_JNDI: "java:/jdbc/mysql"
+  TEST_USERNAME: "eap"
+  TEST_PASSWORD: "demo"
+  TEST_URL: "jdbc:mysql://mysql:3306/eap"
+  TEST_NONXA: "true"
+```
+
+We are going to use the JBoss EAP Operator that we installed earlier to help us deploy the application.
+
+Click on `+Add` in the side menu and choose `Operator Backed`.
 
 Select `WildFlyServer` and click `Create`.
 
