@@ -20,7 +20,11 @@ image::./Images/InstallOperator.png[image]
 
 === Create a Project
 
-Now we need to create a Project for the application. Go to the Project tab and click the `Create Project` button in the upper right hand corner. Enter the name `rehost-jboss` for the Name and click `Create`.
+Now we need to create a Project for the application. In the side menu, click on `Home` and then select the `Projects` tab.
+
+image::./Images/SideMenuProjects.png[image]
+
+Now click the `Create Project` button in the upper right hand corner. Enter the name `rehost-jboss` for the Name and click `Create`.
 
 image::./Images/CreateProject.png[image]
 
@@ -33,6 +37,10 @@ image::./Images/SelectDeveloperView.png[image]
 We are going to add a MySQL database to our application. Click on the `+Add` button in the top left and then select the `Database` option.
 
 image::./Images/AddDatabase.png[image]
+
+Search for `mysql` and click on the MySQL (Ephemeral) option.
+
+image::./Images/JBossDeveloperCatalogMySQL.png[image]
 
 Update the following fields with the corresponding values then click `Create`.
 
@@ -65,13 +73,28 @@ spec:
 
 The application will need to pull an image from the Reg Hat registry so we need to add a pull secret and name it `my-pull-secret`
 
-*Configure the cluster with a global pull secret so it's already there for everyone*
+In the side menu, click on `Secrets` and then click on `Create` in the upper right hand corner.
 
-Click on `+Add` in the side menu. Select Helm Charts. We will be using one of the Helm charts we just imported.
+image::./Images/JBossCreateSecret.png[image]
 
-Select `Eap74 v1.1.0`
+Select `Image pull secret`. Update the following fields with the corresponding values:
 
-image::./Images/EAPHelmCharts.png[image]
+```
+Secret name: my-pull-secret
+Registry server address: registry.redhat.io
+```
+
+For `Username` and `Password` use your access.redhat.com credentials. Then click `Create`.
+
+image::./Images/JBossImagePullSecret.png[image]
+
+Click on `+Add` in the side menu. Select Helm Charts.
+
+image::./Images/JBossDeveloperCatalogHelmChart.png[image]
+
+We will be using one of the Helm charts we just imported. Search for `eap` and select `Eap74`.
+
+image::./Images/JBossHelmChartEAP74.png[image]
 
 Select the `YAML View`
 
