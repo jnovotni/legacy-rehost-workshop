@@ -1,16 +1,18 @@
 # Rehosting WebLogic on OpenShift
 
 ## Introduction
-This document is a guide to getting started with the [WebLogic Kubernetes Operator](https://github.com/oracle/weblogic-kubernetes-operator) on OpenShift using the [domain in image source type](https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/choosing-a-model/). This guide is based on the [quick start provided in the operator documentation](https://oracle.github.io/weblogic-kubernetes-operator/quickstart/) and [this blog post written by Mark Nelson](https://blogs.oracle.com/weblogicserver/running-weblogic-on-openshift).
+This document is a guide to getting started with the https://github.com/oracle/weblogic-kubernetes-operator[WebLogic Kubernetes Operator] on OpenShift using the https://oracle.github.io/weblogic-kubernetes-operator/userguide/managing-domains/choosing-a-model/[domain in image source type]. This guide is based on the https://oracle.github.io/weblogic-kubernetes-operator/quickstart/[quick start provided in the operator documentation] and https://blogs.oracle.com/weblogicserver/running-weblogic-on-openshift[this blog post written by Mark Nelson].
 
 ## Prerequisites
 - You must have an account that has permission to access the Oracle Container Registry. This enables you to pull the base image used in the steps below. If you do not already have an account, you can go to https://container-registry.oracle.com and create one.
-- You must have the OpenShift command line tools installed (including `oc` and `kubectl`). You can download the latest tools from [this link](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.7/) (you'll look for the `openshift-client-{{ operating-system }}` file).
-- You must have Helm (v3) installed on your local machine. You can find instructions to install the tool at [this link](https://helm.sh/docs/helm/helm_install/).
-- You must have either Docker or Podman installed locally on your machine. It will be used it to pull, push, and build images. If you are looking to use Docker, follow these docs to install on [Mac](https://docs.docker.com/docker-for-mac/install/) or [Windows](https://docs.docker.com/docker-for-windows/install/)). If you're looking to use Podman (Linux) ensure that you have some kind of docker command emulation setup (such as the podman-docker package) so that the scripts run successfully.
-- You must have Java 8 installed and your JAVA_HOME variable set. You can find instructions at [this link](https://developers.redhat.com/blog/2018/12/10/install-java-rhel8#).
-- You must have Maven [downloaded](https://maven.apache.org/download.cgi) and [installed](https://maven.apache.org/install.html).
+- You must have the OpenShift command line tools installed (including `oc` and `kubectl`). You can download the latest tools from https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.7/[this link] (you'll look for the `openshift-client-{{ operating-system }}` file).
+- You must have Helm (v3) installed on your local machine. You can find instructions to install the tool at https://helm.sh/docs/helm/helm_install/[this link].
+//- You must have either Docker or Podman installed locally on your machine. It will be used it to pull, push, and build images. If you are looking to use Docker, follow these docs to install on [Mac](https://docs.docker.com/docker-for-mac/install/) or [Windows](https://docs.docker.com/docker-for-windows/install/)). If you're looking to use Podman (Linux) ensure that you have some kind of docker command emulation setup (such as the podman-docker package) so that the scripts run successfully.
+- You must have Docker installed locally on your machine. It will be used to pull, push, and build images. You can find installation instructions at https://docs.docker.com/engine/install/[this link].
+- You must have Java 8 installed and your JAVA_HOME variable set. You can find instructions at https://developers.redhat.com/blog/2018/12/10/install-java-rhel8#[this link].
+- You must have Maven https://maven.apache.org/download.cgi[downloaded] and https://maven.apache.org/install.html[installed].
 - You must have `cluster-admin` access to your OpenShift cluster.
+
 
 ### Part 1: Clone this Repository
 
@@ -74,6 +76,7 @@ helm install weblogic-operator weblogic-kubernetes-operator/kubernetes/charts/we
   --set "enableClusterRoleBinding=true" \
   --set "domainNamespaceSelectionStrategy=LabelSelector" \
   --set "domainNamespaceLabelSelector=weblogic-operator\=enabled" \
+  --set “kubernetesPlatform=OpenShift” \
   --wait
 ```
 
@@ -175,13 +178,14 @@ Status: Downloaded newer image for container-registry.oracle.com/middleware/webl
 container-registry.oracle.com/middleware/weblogic:12.2.1.4
 ```
 
-Download the WebLogic Deploy Tooling to your local working directory. You can download the latest release directly from Oracle [here](https://github.com/oracle/weblogic-deploy-tooling/releases/latest).
+//The tool has already been included in the repository. Uncomment this section if this ever changes.
+//Download the WebLogic Deploy Tooling to your local working directory. You can download the latest release directly from Oracle [here](https://github.com/oracle/weblogic-deploy-tooling/releases/latest).
 
-You can download version 1.9.12 using the following command:
+//You can download version 1.9.12 using the following command:
 
-```
-wget https://github.com/oracle/weblogic-deploy-tooling/releases/download/release-1.9.12/weblogic-deploy.zip
-```
+//```
+//wget https://github.com/oracle/weblogic-deploy-tooling/releases/download/release-1.9.12/weblogic-deploy.zip
+//```
 
 Using the `build-archive.sh` script, build the sample application we will be deploying using the following command:
 
@@ -207,7 +211,7 @@ adding: wlsdeploy/applications/testwebapp.war(in = 3548) (out= 2507)(deflated 29
 ```
 
 Using the `quickBuild.sh` script, build the container image that contains our custom application using the following command:
-
+//needed to break up the setEnv.sh and docker build commands for Ubuntu22
 ```
 ./quickBuild.sh
 ```
@@ -241,7 +245,6 @@ Tag and push our newly created image to the OpenShift registry by running the fo
 
 ```
 docker tag my-domain1-image:1.0 $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/sample-domain1/my-domain1-image:1.0
-docker push $(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/sample-domain1/my-domain1-image:1.0
 ```
 
 The output will be similar to:
@@ -323,21 +326,21 @@ oc expose service domain1-cluster-cluster-1 --port=default
 
 You are now ready to access the admin console or the application in your web browser.
 
-To get the host for the admin console, run the following command:
+To get the host URL for the admin console, run the following command:
 
 ```
 oc get route domain1-admin-server-ext -n sample-domain1 --template='{{ .spec.host }}'
 ```
 
-Once you have the host, going to `http://{{ host }}/console` will allow you to authenticate with the credentials created previously.
+Once you have the host URL, going to `http://{{ host }}/console` will allow you to authenticate with the credentials created previously.
 
-To get the host for the WebLogic application, run the following command:
+To get the host URL for the WebLogic application, run the following command:
 
 ```
 oc get route domain1-cluster-cluster-1 -n sample-domain1 --template='{{ .spec.host }}'
 ```
 
-Once you have the host, going to `http://{{ host }}/testwebapp` will show you our test application that was deployed to WebLogic.
+Once you have the host URL, going to `http://{{ host }}/testwebapp` will show you our test application that was deployed to WebLogic.
 
 == Review
 In this section we were able to deploy the WebLogic Operator as well as a WebLogic Domain onto OpenShift without modifying any of the application's code.
