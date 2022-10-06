@@ -2,7 +2,7 @@
 
 == Introduction
 
-There are many companies running legacy software. Many of these companies realize that they need to modernize their applications, infrastructure, and processes if they are going to meet the growing demands of their customers.
+There are many companies running legacy software. These companies realize that they need to modernize their applications, infrastructure, and processes if they are going to meet the growing demands of their customers.
 
 Rewriting legacy code to take advantage of all of the features that containers offer can be a daunting undertaking.
 
