@@ -71,7 +71,7 @@ spec:
     url: https://jbossas.github.io/eap-charts/
 ```
 
-The application will need to pull an image from the Reg Hat registry so we need to add a pull secret and name it `my-pull-secret`
+The application will need to pull an image from the Red Hat registry so we need to add a pull secret and name it `my-pull-secret`
 
 In the side menu, click on `Secrets` and then click on `Create` in the upper right hand corner.
 
